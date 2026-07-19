@@ -1,0 +1,73 @@
+{
+  "kind": "blacknode.workflow",
+  "schema_version": 1,
+  "name": "Isaac Sim ACT Policy Deployment",
+  "saved_at": "2026-07-18T00:00:00",
+  "entrypoint": {"node_id": "runtime", "port": "dashboard"},
+  "metadata": {
+    "template": true,
+    "description": "Load a Blacknode ACT artifact, receive live Isaac articulation state and RGB sensors through a loopback bridge, preview continuously while disarmed, then arm, interrupt, or stop safety-gated simulated motion.",
+    "color": "#76b900",
+    "required_packages": ["blacknode-training", "blacknode-ros2", "blacknode-isaac"]
+  },
+  "node_meta": {
+    "artifact_path": {
+      "id": "artifact_path", "type": "Text", "pos": [80, 90],
+      "params": {"value": "C:\\path\\to\\policy-00005000"},
+      "inputs": [], "outputs": ["value"], "input_types": {},
+      "output_types": {"value": "Text"}, "input_defaults": {}
+    },
+    "artifact": {
+      "id": "artifact", "type": "PolicyArtifactLoad", "pos": [410, 90],
+      "params": {"artifact_path": ""},
+      "inputs": ["trigger", "artifact_path"],
+      "outputs": ["ok", "artifact", "policy_type", "report"],
+      "input_types": {"trigger": "Any", "artifact_path": "Text"},
+      "output_types": {"ok": "Bool", "artifact": "Dict", "policy_type": "Text", "report": "Text"},
+      "input_defaults": {"artifact_path": ""}
+    },
+    "safety": {
+      "id": "safety", "type": "IsaacPolicySafetyGate", "pos": [410, 390],
+      "params": {"max_velocity_deg_s": 30.0, "max_step_deg": 3.0, "stale_after": 0.5, "loop_hz": 10.0, "workspace_limits": {}, "log_dir": ""},
+      "inputs": ["trigger", "max_velocity_deg_s", "max_step_deg", "stale_after", "loop_hz", "workspace_limits", "log_dir"],
+      "outputs": ["ok", "safety", "report"],
+      "input_types": {"trigger": "Any", "max_velocity_deg_s": "Float", "max_step_deg": "Float", "stale_after": "Float", "loop_hz": "Float", "workspace_limits": "Dict", "log_dir": "Text"},
+      "output_types": {"ok": "Bool", "safety": "Dict", "report": "Text"},
+      "input_defaults": {"max_velocity_deg_s": 30.0, "max_step_deg": 3.0, "stale_after": 0.5, "loop_hz": 10.0, "workspace_limits": {}, "log_dir": ""}
+    },
+    "bridge": {
+      "id": "bridge", "type": "IsaacPolicyBridge", "pos": [800, 80],
+      "params": {"action": "status", "run_id": "isaac-policy-bridge", "artifact": {}, "host": "127.0.0.1", "port": 8770},
+      "inputs": ["trigger", "action", "run_id", "artifact", "host", "port"],
+      "outputs": ["ok", "running", "connected", "bridge", "bridge_url", "status", "dashboard", "report"],
+      "input_types": {"trigger": "Any", "action": "Text", "run_id": "Text", "artifact": "Dict", "host": "Text", "port": "Int"},
+      "output_types": {"ok": "Bool", "running": "Bool", "connected": "Bool", "bridge": "Dict", "bridge_url": "Text", "status": "Dict", "dashboard": "Image", "report": "Text"},
+      "input_defaults": {"action": "status", "run_id": "isaac-policy-bridge", "artifact": {}, "host": "127.0.0.1", "port": 8770},
+      "input_choices": {"action": ["status", "start", "stop"]}
+    },
+    "runtime": {
+      "id": "runtime", "type": "IsaacPolicyRuntime", "pos": [1210, 320],
+      "params": {"action": "status", "run_id": "isaac-policy", "artifact": {}, "bridge": {}, "safety": {}, "device": "auto"},
+      "inputs": ["trigger", "action", "run_id", "artifact", "bridge", "safety", "device"],
+      "outputs": ["ok", "running", "armed", "emergency_stop", "human_takeover", "phase", "prediction", "action", "clamped", "metrics", "dashboard", "log_path", "report"],
+      "input_types": {"trigger": "Any", "action": "Text", "run_id": "Text", "artifact": "Dict", "bridge": "Dict", "safety": "Dict", "device": "Text"},
+      "output_types": {"ok": "Bool", "running": "Bool", "armed": "Bool", "emergency_stop": "Bool", "human_takeover": "Bool", "phase": "Text", "prediction": "Dict", "action": "Dict", "clamped": "List", "metrics": "Dict", "dashboard": "Image", "log_path": "Text", "report": "Text"},
+      "input_defaults": {"action": "status", "run_id": "isaac-policy", "artifact": {}, "bridge": {}, "safety": {}, "device": "auto"},
+      "input_choices": {"action": ["status", "check", "start", "arm", "disarm", "estop", "reset_estop", "takeover", "reset_takeover", "stop"], "device": ["auto", "cuda", "cpu"]}
+    },
+    "bridge_url": {
+      "id": "bridge_url", "type": "Output", "pos": [1210, 80],
+      "params": {"label": "Isaac bridge URL"},
+      "inputs": ["value"], "outputs": [], "input_types": {"value": "Any"},
+      "output_types": {}, "input_defaults": {}
+    }
+  },
+  "edges": [
+    {"from": "artifact_path", "from_port": "value", "to": "artifact", "to_port": "artifact_path"},
+    {"from": "artifact", "from_port": "artifact", "to": "bridge", "to_port": "artifact"},
+    {"from": "artifact", "from_port": "artifact", "to": "runtime", "to_port": "artifact"},
+    {"from": "bridge", "from_port": "bridge", "to": "runtime", "to_port": "bridge"},
+    {"from": "safety", "from_port": "safety", "to": "runtime", "to_port": "safety"},
+    {"from": "bridge", "from_port": "bridge_url", "to": "bridge_url", "to_port": "value"}
+  ]
+}

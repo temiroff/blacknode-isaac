@@ -1,0 +1,12 @@
+[package]
+name = "blacknode-isaac"
+version = "0.1.0"
+description = "Closed-loop Blacknode policy deployment for Isaac Sim articulations and RGB sensors."
+requires-blacknode = ">=0.1.0"
+
+[categories]
+"Isaac Sim" = "#76b900"
+
+[dependencies]
+pip = ["numpy>=1.24", "pillow>=10"]
+imports = ["numpy", "PIL"]
