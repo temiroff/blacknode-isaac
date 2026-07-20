@@ -26,9 +26,9 @@ except Exception:  # pragma: no cover - package health reports this
 
 def _policy_module():
     try:
-        from blacknode.pkg.blacknode_ros2 import policy_runtime
+        from blacknode.pkg.blacknode_controllers.policy import policy_runtime
     except Exception as exc:  # pragma: no cover - surfaced by nodes
-        raise RuntimeError("blacknode-ros2 is required for the shared policy safety runtime") from exc
+        raise RuntimeError("blacknode-controllers/policy is required for the shared policy safety runtime") from exc
     return policy_runtime
 
 
