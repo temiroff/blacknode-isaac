@@ -1,7 +1,7 @@
 {
   "kind": "blacknode.workflow",
   "schema_version": 1,
-  "name": "Isaac Sim ACT Policy Deployment",
+  "name": "ACT Policy Deployment",
   "saved_at": "2026-07-18T00:00:00",
   "entrypoint": {"node_id": "runtime", "port": "dashboard"},
   "metadata": {
