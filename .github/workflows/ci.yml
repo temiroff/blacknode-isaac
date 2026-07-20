@@ -27,6 +27,11 @@ jobs:
         with:
           repository: temiroff/blacknode-controllers
           path: core/packages/blacknode-controllers
+      - name: Check out training dependency
+        uses: actions/checkout@v6
+        with:
+          repository: temiroff/blacknode-training
+          path: core/packages/blacknode-training
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
