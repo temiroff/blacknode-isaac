@@ -15,7 +15,6 @@ default = true
 capabilities = ["simulation.isaac", "simulation.policy-execution"]
 nodes = ["nodes"]
 module-root = true
-node-types = ["IsaacPolicyBridge", "IsaacPolicyRuntime", "IsaacPolicySafetyGate"]
 
 [components.core.dependencies]
 pip = ["numpy>=1.24", "pillow>=10"]
@@ -29,6 +28,10 @@ default = false
 capabilities = ["simulation.isaac.bridge"]
 
 # Declared for the package roadmap; sources land in components/robot-models/nodes.
+node-types = [
+  "IsaacPolicyBridge"
+]
+
 [components.robot-models]
 description = "Robot model and USD asset import."
 default = false
@@ -53,6 +56,10 @@ default = false
 capabilities = ["simulation.policy-execution"]
 
 # Declared for the package roadmap; sources land in components/scenario-assets/nodes.
+node-types = [
+  "IsaacPolicyRuntime", "IsaacPolicySafetyGate"
+]
+
 [components.scenario-assets]
 description = "Scenario, scene, and asset composition."
 default = false
