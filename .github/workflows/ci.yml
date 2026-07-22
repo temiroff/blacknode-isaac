@@ -32,6 +32,11 @@ jobs:
         with:
           repository: temiroff/blacknode-training
           path: core/packages/blacknode-training
+      - name: Check out ROS 2 dependency
+        uses: actions/checkout@v6
+        with:
+          repository: temiroff/blacknode-ros2
+          path: core/packages/blacknode-ros2
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
