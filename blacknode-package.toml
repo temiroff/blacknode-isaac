@@ -24,7 +24,7 @@ requires = [{ package = "blacknode-controllers", component = "policy", version =
 # Declared for the package roadmap; sources land in components/bridge/nodes.
 [components.bridge]
 description = "Isaac Sim connection and stage bridge."
-default = false
+default = true
 capabilities = ["simulation.isaac.bridge"]
 
 # Declared for the package roadmap; sources land in components/robot-models/nodes.
@@ -52,7 +52,7 @@ capabilities = ["simulation.isaac.articulations"]
 # Declared for the package roadmap; sources land in components/policy-runtime/nodes.
 [components.policy-runtime]
 description = "Managed policy execution and safety gating."
-default = false
+default = true
 capabilities = ["simulation.policy-execution"]
 
 # Declared for the package roadmap; sources land in components/scenario-assets/nodes.
