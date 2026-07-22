@@ -21,3 +21,45 @@ node-types = ["IsaacPolicyBridge", "IsaacPolicyRuntime", "IsaacPolicySafetyGate"
 pip = ["numpy>=1.24", "pillow>=10"]
 imports = ["numpy", "PIL"]
 requires = [{ package = "blacknode-controllers", component = "policy", version = ">=0.1.0,<1.0.0" }]
+
+# Declared for the package roadmap; sources land in components/bridge/nodes.
+[components.bridge]
+description = "Isaac Sim connection and stage bridge."
+default = false
+capabilities = ["simulation.isaac.bridge"]
+
+# Declared for the package roadmap; sources land in components/robot-models/nodes.
+[components.robot-models]
+description = "Robot model and USD asset import."
+default = false
+capabilities = ["simulation.isaac.models"]
+
+# Declared for the package roadmap; sources land in components/virtual-sensors/nodes.
+[components.virtual-sensors]
+description = "Simulated RGB, depth, and IMU sensors."
+default = false
+capabilities = ["simulation.isaac.sensors"]
+
+# Declared for the package roadmap; sources land in components/articulations/nodes.
+[components.articulations]
+description = "Articulation control and joint drives."
+default = false
+capabilities = ["simulation.isaac.articulations"]
+
+# Declared for the package roadmap; sources land in components/policy-runtime/nodes.
+[components.policy-runtime]
+description = "Managed policy execution and safety gating."
+default = false
+capabilities = ["simulation.policy-execution"]
+
+# Declared for the package roadmap; sources land in components/scenario-assets/nodes.
+[components.scenario-assets]
+description = "Scenario, scene, and asset composition."
+default = false
+capabilities = ["simulation.isaac.scenarios"]
+
+# Declared for the package roadmap; sources land in components/qualification/nodes.
+[components.qualification]
+description = "Sim-to-real qualification and acceptance checks."
+default = false
+capabilities = ["simulation.isaac.qualification"]

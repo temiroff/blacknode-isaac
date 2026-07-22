@@ -43,7 +43,7 @@ def _dashboard(status: dict[str, Any], title: str) -> str:
 
 
 @node(
-    name="IsaacPolicySafetyGate", category=_CATEGORY,
+    name="IsaacPolicySafetyGate", component="policy-runtime", category=_CATEGORY,
     description="Configure USD joint, velocity, freshness, optional workspace, and replay-log safety for Isaac policy execution.",
     inputs={
         "trigger": AnyPort,
@@ -78,7 +78,7 @@ def isaac_policy_safety_gate(ctx: dict) -> dict:
 
 
 @node(
-    name="IsaacPolicyBridge", live=True, category=_CATEGORY,
+    name="IsaacPolicyBridge", component="bridge", live=True, category=_CATEGORY,
     description="Start a loopback bridge that receives Isaac articulation/RGB observations and returns safety-gated policy targets. Starts disarmed.",
     inputs={
         "trigger": AnyPort,
@@ -130,7 +130,7 @@ def isaac_policy_bridge(ctx: dict) -> dict:
 
 
 @node(
-    name="IsaacPolicyRuntime", live=True, category=_CATEGORY,
+    name="IsaacPolicyRuntime", component="policy-runtime", live=True, category=_CATEGORY,
     description="Run a loaded policy continuously from Isaac RGB/state observations and apply targets only after explicit arming, with e-stop and takeover controls.",
     inputs={
         "trigger": AnyPort,
