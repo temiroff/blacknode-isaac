@@ -7,7 +7,7 @@ layer = "simulation"
 component-mode = true
 
 [categories]
-"Isaac Sim" = "#76b900"
+"Isaac Sim" = "#22d3ee"
 
 [components.core]
 description = "Isaac Sim bridge, shared policy safety, and managed articulation execution."
